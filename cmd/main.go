@@ -3,6 +3,8 @@ package main
 import (
 	"context"
 	"os"
+	"os/signal"
+	"syscall"
 	"todolist"
 	"todolist/pkg/handler"
 	"todolist/pkg/repo"
@@ -53,7 +55,7 @@ func main() {
 	logrus.Print("TodolistApp Started")
 
 	quit := make(chan os.Signal, 1)
-
+	signal.Notify(quit, syscall.SIGTERM, syscall.SIGINT)
 	<-quit
 
 	logrus.Print("TodolistApp Shutting Down")
